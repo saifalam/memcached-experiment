@@ -1,0 +1,20 @@
+FROM ubuntu:16.04
+      
+MAINTAINER Saif <Md_Saif.Alam@mailbox.tu-dresden.de>
+
+# Update the default application repository sources list
+RUN apt-get update -q && apt-get upgrade -y
+
+# install memcached
+RUN apt-get install -y -q  memcached
+
+# start memcached
+#RUN service memcached start
+
+RUN cp /etc/memcached.conf /etc/memcached.conf.bak 
+RUN sed -i 's/-l 127.0.0.1/-l 0.0.0.0/' /etc/memcached.conf
+
+#Expose port
+EXPOSE 10022 11211
+
+ENTRYPOINT service memcached restart && /bin/bash
