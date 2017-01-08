@@ -1,0 +1,48 @@
+import dude
+
+dude_version = 3
+name         = "memchached Experiment"
+
+timeout         = 150
+
+raw_output_dir = "raw-throughput-latency"
+sum_output_dir = "output-throughput-latency"
+
+localDir        = "."
+
+optspace = {
+    "rate"    : [10000, 20000, 30000, 50000, 100000, 150000,300000, 500000, 600000, 800000],
+}
+
+SSHHost    = "localhost"
+SSHPort    = 22
+REMOTEROOT = "~"
+
+class Statistics (dude.summaries.FilesLineSelect):
+    def __init__(self, n, h, folder = localDir):
+        dude.summaries.FilesLineSelect.__init__(
+            self,
+            name   = n,
+            regex = '^[0-9]+.*',
+            header = h,
+            files  = folder + '/' + n,
+            fname_header = 'none',
+            fname_split  = (lambda fname: "1"),
+            ) 
+
+summaries = [Statistics("dude.output", "requests latency")]
+
+def setDefault(optpt, key, value):
+    if key not in optpt.keys(): optpt[key] = value   
+
+def cmdl_exp(optpt):
+    return "/assignment/run-experiment.sh %d" % optpt["noRequests"]
+    
+def prepare_global():
+    print ""
+
+def prepare_exp(optpt):
+    setDefault(optpt, "noRequests",  optpt["rate"])
+
+def finish_exp(optpt, status):
+    print ""
