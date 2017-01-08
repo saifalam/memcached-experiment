@@ -4,6 +4,7 @@ services:
              build:
                 context: .
                 dockerfile: DockerfileContainer1
+             container_name: server
              ports:
                   - 10022:10022
                   - 11211:11211
@@ -15,6 +16,7 @@ services:
              build:
                 context: .
                 dockerfile: DockerfileContainer2
+             container_name: client
              ports:
                   - 10023:10023
              networks:

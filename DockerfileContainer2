@@ -24,6 +24,7 @@ COPY graphs.R /assignment/
 COPY Dudefile /assignment/
 COPY run.sh /assignment/
 COPY run-experiment.sh /assignment/
+WORKDIR /assignment/
 
 #Expose port
 EXPOSE 10023 
