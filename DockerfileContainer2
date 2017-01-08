@@ -1,0 +1,31 @@
+FROM ubuntu:16.04
+      
+MAINTAINER Saif <Md_Saif.Alam@mailbox.tu-dresden.de>
+
+# Update the default application repository sources list
+RUN apt-get update -q && apt-get upgrade -y
+RUN apt-get install -y gcc make python openssh-client wget
+
+# Download mcperf Repository extract & install it
+RUN wget -O mcperf.tar.gz https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/twemperf/mcperf-0.1.1.tar.gz
+RUN mkdir mcperf && tar -xvf mcperf.tar.gz --strip-components=1  -C ./mcperf/
+RUN cd /mcperf && ./configure && make && make install
+
+# Download dude Repository, extract & install it
+RUN wget -O dude.tar.gz https://bitbucket.org/db7/dude/get/v3.1.tar.gz && mkdir dude && tar -xvf dude.tar.gz --strip-components=1 -C ./dude/
+RUN cd /dude && python setup.py install
+
+# Install R 
+RUN apt-get -y install r-base
+
+#Copy dudefile, graphs.R and run.sh file 
+RUN mkdir assignment
+COPY graphs.R /assignment/
+COPY Dudefile /assignment/
+COPY run.sh /assignment/
+COPY run-experiment.sh /assignment/
+
+#Expose port
+EXPOSE 10023 
+
+ENTRYPOINT /bin/bash
