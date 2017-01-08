@@ -1,0 +1,26 @@
+version: '2'
+services:
+        server:
+             build:
+                context: .
+                dockerfile: DockerfileContainer1
+             ports:
+                  - 10022:10022
+                  - 11211:11211
+             networks:
+                  - memcached
+             tty: true
+
+        client:
+             build:
+                context: .
+                dockerfile: DockerfileContainer2
+             ports:
+                  - 10023:10023
+             networks:
+                  - memcached
+             tty: true
+      
+networks:
+     memcached:
+        driver: bridge
