@@ -9,21 +9,21 @@ Necessary commands for the application to up and running.
     -the project is build on docker container
     -R, shell, python and Dude is used to complete this experiment 
 
-### Prerequisites: ###  
+### Prerequisites:   
 
     -docker and docker-compose   
 
 ### commands to run this project ###
 
-* Run all containers  
+Run all containers  
 
        -docker-compose up    
 
-* Run the experiment  
+Run the experiment  
 
        -docker exec -it client  /assignment/run.sh    
 
-* Get output graphs  
+Get output graphs  
 
        -docker cp client:/assignment/graph1.pdf .    
        -docker cp client:/assignment/graph2.pdf .  
